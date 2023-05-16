@@ -1,0 +1,11 @@
+<div style="padding: 10px">
+  <div class="content">
+    <div class="header"><h1>{{ padlet?.name }}</h1></div>
+  </div>
+  <div class="extra">ID: {{ padlet?.id }}</div>
+  <br>
+  <a *ngFor="let entrie of entries" class="item">
+    <div class="header">{{entrie?.title }}</div>
+  </a><br>
+  <button (click)="showPadletList()" class="ui blue button">Zurück zur Padletübersicht</button>
+</div>

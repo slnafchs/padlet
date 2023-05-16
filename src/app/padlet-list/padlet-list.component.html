@@ -1,10 +1,4 @@
 <div class="ui middle aligned selection divided list">
-  <a *ngFor="let padlet of padlets" class="item">
-    <div class="content">
-      <div class="header">{{ padlet.name }}</div>
-      <div class="metadata">
-        <div class="extra">Ersteller: {{ padlet.user_id.firstName }} {{ padlet.user_id.lastName }}</div>
-      </div>
-    </div>
-  </a>
+  <a *ngFor="let padlet of padlets" class="item bs-padlet-list-item" [padlet]="padlet"
+  (click)="showDetails(padlet)"></a>
 </div>

@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Output, OnInit} from '@angular/core';
 import {Padlet} from "../shared/padlet";
 import {User} from "../shared/user";
+import {PadletService} from "../shared/padlet.service";
 
 @Component({
   selector: 'bs-padlet-list',
@@ -9,17 +10,16 @@ import {User} from "../shared/user";
 })
 export class PadletListComponent implements OnInit {
   padlets: Padlet[] = [];
+  @Output() showDetailsEvent = new EventEmitter<Padlet>();
+
+  constructor(private p: PadletService) {
+  }
+
 
   ngOnInit() {
-    this.padlets = [
-      new Padlet(1,
-        'Padlet 1', true,
-        new User(1, 'Susi', 'Huber', 'test@test.at', 'secret',
-          'https://i.pinimg.com/originals/ba/d4/5a/bad45a40fa6e153ef8d1599ba875102c.png')),
-      new Padlet(2,
-        'Padlet 2', false,
-        new User(2, 'Antonia', 'Kriegner', 'test@test.at', 'secret',
-          'https://i.pinimg.com/originals/ba/d4/5a/bad45a40fa6e153ef8d1599ba875102c.png'))
-    ]
+    this.padlets = this.p.getAllPadlets();
+  }
+  showDetails(padlet: Padlet) {
+    this.showDetailsEvent.emit(padlet);
   }
 }
