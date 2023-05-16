@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Output, OnInit} from '@angular/core';
-import {Padlet} from "../shared/padlet";
-import {User} from "../shared/user";
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Padlet, User} from "../shared/padlet";
 import {PadletService} from "../shared/padlet.service";
 
 @Component({
@@ -8,18 +7,18 @@ import {PadletService} from "../shared/padlet.service";
   templateUrl: './padlet-list.component.html',
   styles: []
 })
-export class PadletListComponent implements OnInit {
+export class PadletListComponent implements OnInit{
+
   padlets: Padlet[] = [];
+
   @Output() showDetailsEvent = new EventEmitter<Padlet>();
-
-  constructor(private p: PadletService) {
-  }
-
+  constructor(private bs: PadletService) {}
 
   ngOnInit() {
-    this.padlets = this.p.getAllPadlets();
+    this.padlets = this.bs.getAllPadlets();
   }
-  showDetails(padlet: Padlet) {
-    this.showDetailsEvent.emit(padlet);
-  }
+
+  /*showDetails(padlet:Padlet) {
+    this.showDetailsEvent.emit(padlet)
+  }*/
 }

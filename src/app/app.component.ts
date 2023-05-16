@@ -3,12 +3,14 @@ import { Padlet } from './shared/padlet';
 
 @Component({
   selector: 'bs-root',
-  template: `
+  templateUrl: './app.component.html'
+
+    /*`
     <bs-padlet-list *ngIf="listOn"
     (showDetailsEvent)="showDetails($event)"></bs-padlet-list>
     <bs-padlet-details *ngIf="detailsOn" [padlet]="padlet"
     (showListEvent)="showList()"></bs-padlet-details>
-  `
+  `*/
 })
 export class AppComponent {
   title = 'padlet';

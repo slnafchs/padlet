@@ -1,30 +1,27 @@
-import {Component, EventEmitter, Output, Input, OnInit} from '@angular/core';
-import {Padlet, User} from '../shared/padlet';
+import {Component,EventEmitter,Input, OnInit,Output} from '@angular/core';
+import {Padlet, User} from "../shared/padlet";
 import {Entrie} from "../shared/entrie";
 import {PadletService} from "../shared/padlet.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'bs-padlet-details',
   templateUrl: './padlet-details.component.html',
-  styles: []
+  styles: [
+  ]
 })
+export class PadletDetailsComponent implements OnInit{
 
-export class PadletDetailsComponent implements OnInit {
-
-  @Input() padlet: Padlet | undefined
-  @Output() showListEvent = new EventEmitter<any>();
-
-  showPadletList() {
-    this.showListEvent.emit();
-  }
-
-  constructor(private p: PadletService) {
-  }
-
+  padlet: Padlet | undefined;
   entries: Entrie[] = [];
 
-  ngOnInit() {
-    this.entries = this.p.getAllEntries();
+
+  constructor(private p: PadletService, private route: ActivatedRoute) {
+  }
+
+  ngOnInit(){
+    const params = this.route.snapshot.params;
+    this.padlet = this.p.getSinglePadlet(params['id']);
+    this.entries = this.p.getAllEntries(params['id']);
   }
 }
-

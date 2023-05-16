@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {AppRoutingModule} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PadletListComponent } from './padlet-list/padlet-list.component';
 import { PadletListItemComponent } from './padlet-list-item/padlet-list-item.component';
@@ -17,7 +17,7 @@ import {PadletService} from "./shared/padlet.service";
     EntrieItemComponent,
   ],
   imports: [
-    BrowserModule
+    BrowserModule, AppRoutingModule
   ],
   providers: [PadletService],
   bootstrap: [AppComponent]
