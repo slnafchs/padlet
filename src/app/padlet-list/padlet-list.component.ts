@@ -10,15 +10,20 @@ import {PadletService} from "../shared/padlet.service";
 export class PadletListComponent implements OnInit{
 
   padlets: Padlet[] = [];
+  user: User[] = [];
 
-  @Output() showDetailsEvent = new EventEmitter<Padlet>();
-  constructor(private bs: PadletService) {}
+  /*@Output() showDetailsEvent = new EventEmitter<Padlet>();*/
+  constructor(
+    private bs: PadletService) {}
 
   ngOnInit() {
-    this.padlets = this.bs.getAllPadlets();
+    this.bs.getAllPadlets().subscribe(res=>this.padlets = res);
+    this.bs.getUser().subscribe(res=>this.user = res);
   }
 
-  /*showDetails(padlet:Padlet) {
+  /*
+  showDetails(padlet:Padlet) {
     this.showDetailsEvent.emit(padlet)
   }*/
+
 }

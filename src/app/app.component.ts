@@ -1,28 +1,20 @@
-import { Component } from '@angular/core';
-import { Padlet } from './shared/padlet';
+import {Component} from '@angular/core';
+import {Padlet} from "./shared/padlet";
+import {HttpClient} from "@angular/common/http";
+import {map} from 'rxjs/operators';
 
 @Component({
   selector: 'bs-root',
   templateUrl: './app.component.html'
-
-    /*`
-    <bs-padlet-list *ngIf="listOn"
-    (showDetailsEvent)="showDetails($event)"></bs-padlet-list>
-    <bs-padlet-details *ngIf="detailsOn" [padlet]="padlet"
-    (showListEvent)="showList()"></bs-padlet-details>
-  `*/
 })
-export class AppComponent {
-  title = 'padlet';
-  listOn = true;
-  detailsOn = false;
 
+export class AppComponent {
+  //title = 'padletAngularApp';
+  //listOn = true;
+  //detailsOn = false;
   padlet: Padlet | undefined;
 
-  showList() {
-    this.listOn = true; this.detailsOn = false;
+  constructor(private http: HttpClient) {
+    http.get<Padlet>('https://padlet.s2010456006.student.kwmhgb.at/padlets').subscribe(val => this.padlet = val);
   }
-  showDetails(padlet: Padlet) { this.padlet = padlet; this.listOn = false; this.detailsOn = true;
-  }
-
 }

@@ -1,8 +1,9 @@
-import {Component,EventEmitter,Input, OnInit,Output} from '@angular/core';
-import {Padlet, User} from "../shared/padlet";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Padlet, User} from '../shared/padlet';
 import {Entrie} from "../shared/entrie";
 import {PadletService} from "../shared/padlet.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {PadletFactory} from "../shared/padlet-factory";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -10,18 +11,29 @@ import {ActivatedRoute} from "@angular/router";
   styles: [
   ]
 })
-export class PadletDetailsComponent implements OnInit{
 
-  padlet: Padlet | undefined;
+
+export class PadletDetailsComponent implements OnInit {
+
+  padlet: Padlet = PadletFactory.empty();
   entries: Entrie[] = [];
 
 
-  constructor(private p: PadletService, private route: ActivatedRoute) {
+//padlet: Padlet | undefined;
+//entries: Entrie[] = [];
+  constructor(
+    private bs: PadletService,
+    private router: Router,
+    private route: ActivatedRoute
+
+  ) {}
+
+  ngOnInit() {
+    const params = this.route.snapshot.params;
+    this.bs.getSinglePadlet(params['id'])
+      .subscribe((p:Padlet) => this.padlet = p);
+    this.bs.getAllEntries(params['id']).subscribe(res => this.entries = res);
+    console.log()
   }
 
-  ngOnInit(){
-    const params = this.route.snapshot.params;
-    this.padlet = this.p.getSinglePadlet(params['id']);
-    this.entries = this.p.getAllEntries(params['id']);
-  }
 }
