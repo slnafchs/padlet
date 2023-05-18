@@ -10,6 +10,6 @@ export class Entrie {
     public user_id: number,
     public padlet_id: number,
     public title: string,
-    public content: string
+    public content: string,
   ) {}
 }

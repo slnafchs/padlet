@@ -5,6 +5,9 @@ import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFactory} from "../shared/padlet-factory";
 import {UserFactory} from "../shared/user-factory";
+import {EntrieFactory} from "../shared/entrie-factory";
+import {RatingFactory} from "../shared/rating-factory";
+import {Rating} from "../shared/rating";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -17,6 +20,7 @@ export class PadletDetailsComponent implements OnInit {
 
   padlet: Padlet = PadletFactory.empty();
   entries: Entrie[] = [];
+  entrie: Entrie = EntrieFactory.empty();
 
   user: User = UserFactory.empty();
 

@@ -23,13 +23,18 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getUser() : Observable<User[]>{
-    return this.http.get<User>(`${this.api}/padlets`)
+  getAllEntries() : Observable<Array<Entrie>>{
+    return this.http.get<Array<Entrie>>(`${this.api}/entries`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getAllEntries(id:number) : Observable<Entrie[]>{
-    return this.http.get<Entrie[]>(`${this.api}/padlets/${id}`)
+  getSingleEntrie(id:number) : Observable<Entrie>{
+    return this.http.get<Entrie>(`${this.api}/padlets/${id}/entries/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUser() : Observable<User[]>{
+    return this.http.get<User>(`${this.api}/padlets`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
