@@ -8,6 +8,7 @@ import {UserFactory} from "../shared/user-factory";
 import {EntrieFactory} from "../shared/entrie-factory";
 import {RatingFactory} from "../shared/rating-factory";
 import {Rating} from "../shared/rating";
+import {Comment} from "../shared/comment";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -38,6 +39,28 @@ export class PadletDetailsComponent implements OnInit {
         this.padlet = p;
         this.entries = this.padlet.entries;
         this.user = this.padlet.user;
+        this.getRatings();
+        this.getComments();
       });
+  }
+
+  getRatings() : void {
+    for(let entrie of this.entries) {
+      this.bs.getRatingsForEntrie(entrie.id).subscribe((res: Rating[]) => {
+        entrie.ratings = res;
+      })
+    }
+  }
+
+  getComments() : void {
+    for (let entrie of this.entries) {
+      this.bs.getCommentsForEntrie(entrie.id).subscribe((res: Comment[]) => {
+        entrie.comments = res;
+      });
+    }
+  }
+
+  getRating(rating: number) {
+    return Array(rating)
   }
 }

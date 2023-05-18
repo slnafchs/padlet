@@ -7,8 +7,10 @@ export { Entrie } from "./entrie";
 export class Comment {
   constructor(
     public id:number,
-    public user_id: User,
-    public entrie_id: Entrie,
-    public comment:string
+    public user_id: number,
+    public user: User,
+    public entrie_id: number,
+    public entrie: Entrie,
+    public comment: string
   ) {}
 }

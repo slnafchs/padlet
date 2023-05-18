@@ -5,5 +5,14 @@
 <div *ngFor="let entrie of entries" class="item">
 <div class="header"><b>{{entrie?.title }}</b></div>
   <div class="extra">{{entrie?.content }}</div><br>
+  <div *ngFor="let rating of entrie.ratings">
+    <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+    <div class="ui star rating" *ngIf="rating.rating">
+      <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
+    </div>
+    <div *ngFor="let c of entrie.comments">
+      <div class="extra" *ngIf="rating.user.id == c.user.id">{{c.comment}}</div>
+    </div><br>
+  </div><br>
 </div><br>
 <button [routerLink] = "'/padlets'" class="ui blue button">Zurück zur Padletliste</button>

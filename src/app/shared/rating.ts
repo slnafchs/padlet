@@ -5,8 +5,9 @@ export { Entrie } from "./entrie";
 
 export class Rating {
   constructor(
-    public user_id: User,
-    public entrie_id: Entrie,
+    public user_id: number,
+    public user: User,
+    public entrie: Entrie,
     public rating: number
   ) {}
 }
