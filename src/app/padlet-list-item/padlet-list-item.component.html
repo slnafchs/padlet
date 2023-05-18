@@ -1,7 +1,7 @@
 <div class="content">
   <div class="header">{{ padlet?.name }}</div>
   <div class="metadata">
-    <div class="content">User: {{ padlet?.user_id}}</div>
+    <div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
   </div>
   <div class="extra">ID: {{ padlet?.id }}</div>
 </div>

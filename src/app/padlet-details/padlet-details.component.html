@@ -1,6 +1,9 @@
 <div class="header"><h1>{{ padlet?.name }}</h1></div>
-<br>
-<a *ngFor="let entrie of entries" class="item">
-<div class="header">Titel: {{entrie?.title }}</div>
-</a><br>
+<div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<hr><br>
+
+<div *ngFor="let entrie of entries" class="item">
+<div class="header"><b>{{entrie?.title }}</b></div>
+  <div class="extra">{{entrie?.content }}</div><br>
+</div><br>
 <button [routerLink] = "'/padlets'" class="ui blue button">Zurück zur Padletliste</button>
