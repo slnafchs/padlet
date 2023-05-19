@@ -9,6 +9,7 @@ import {EntrieFactory} from "../shared/entrie-factory";
 import {RatingFactory} from "../shared/rating-factory";
 import {Rating} from "../shared/rating";
 import {Comment} from "../shared/comment";
+import {formatDate} from "@angular/common";
 
 @Component({
   selector: 'bs-padlet-details',
@@ -24,6 +25,7 @@ export class PadletDetailsComponent implements OnInit {
   entrie: Entrie = EntrieFactory.empty();
 
   user: User = UserFactory.empty();
+
 
   constructor(
     private bs: PadletService,

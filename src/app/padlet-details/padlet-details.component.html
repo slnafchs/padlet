@@ -1,18 +1,27 @@
 <div class="header"><h1>{{ padlet?.name }}</h1></div>
-<div class="content">Ersteller: {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
-<hr><br>
-
-<div *ngFor="let entrie of entries" class="item">
-<div class="header"><b>{{entrie?.title }}</b></div>
-  <div class="extra">{{entrie?.content }}</div><br>
-  <div *ngFor="let rating of entrie.ratings">
-    <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
-    <div class="ui star rating" *ngIf="rating.rating">
-      <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
+<div class="content">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<br>
+<div *ngFor="let entrie of entries" class="item ui card">
+  <div class="content">
+    <div class="header"><b>{{entrie?.title }}</b></div>
+    <!-- Vor- und Nachname + Erstelldatum-->
+    <div class="description">{{entrie?.content }}</div><br>
+    <div class="ui small basic icon buttons">
+      <button class="ui button"><i class="edit icon"></i></button>
+      <button class="ui button"><i class="delete icon"></i></button>
+      <button class="ui button"><i class="comment icon"></i></button>
+      <button class="ui button"><i class="star icon"></i></button>
     </div>
-    <div *ngFor="let c of entrie.comments">
-      <div class="extra" *ngIf="rating.user.id == c.user.id">{{c.comment}}</div>
-    </div><br>
-  </div><br>
-</div><br>
-<button [routerLink] = "'/padlets'" class="ui blue button">Zurück zur Padletliste</button>
+  </div>
+  <!-- Kommentare und Ratings ausgeben-->
+    <div *ngFor="let rating of entrie.ratings" class="extra content">
+      <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+      <div class="ui star rating" *ngIf="rating.rating">
+        <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
+      </div>
+      <div *ngFor="let c of entrie.comments">
+        <div class="extra" *ngIf="rating.user.id == c.user.id">{{c.comment}}</div>
+      </div>
+    </div>
+</div>
+<!--<button [routerLink]="'/padlets'" class="ui blue button">Zurück zur Padletliste</button>-->
