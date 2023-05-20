@@ -18,7 +18,7 @@
     <a class="item" (click)="toggleRatings()">Bewertungen</a>
   </div>
 
-  <div *ngIf="showRatings">
+  <div *ngIf="showRatings" class="content">
     <div *ngFor="let rating of entrie.ratings" class="extra content">
       <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
       <div class="ui star rating" *ngIf="rating.rating">
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div *ngIf="showComments">
+  <div *ngIf="showComments" class="content">
     <div *ngFor="let c of entrie.comments">
       <div class="extra">{{c.user.firstName}} {{c.user.lastName}}:</div>
       <div class="extra">{{c.comment}}</div>

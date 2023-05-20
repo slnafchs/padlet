@@ -29,7 +29,6 @@ export class EntrieItemComponent implements OnInit{
         this.entrie.user = res;
       });
     }
-    console.log(this.entrie)
   }
 
   getRating(rating: number) {

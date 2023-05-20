@@ -6,6 +6,7 @@ import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs";
 import {Rating} from "./rating";
 import {Comment} from "./comment";
+import {UserFactory} from "./user-factory";
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  public getCurrentUserId() : string {
+    return <string>sessionStorage.getItem("userId");
+  }
+
   getRatingsForEntrie(id: number) : Observable<Array<Rating>> {
     return this.http.get<Array<Rating>>(`${this.api}/entries/${id}/ratings`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
@@ -53,6 +58,22 @@ export class PadletService {
   getCommentsForEntrie(id: number) : Observable<Array<Comment>> {
     return this.http.get<Array<Comment>>(`${this.api}/entries/${id}/comments`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  createPadlet (padlet: Padlet): Observable<any> {
+    return this.http.post(`${this.api}/padlets`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  updatePadlet (padlet: Padlet): Observable<any> {
+    return this.http.put(`${this.api}/padlets/${padlet.id}`, padlet)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  deletePadlet (id: string): Observable<any> {
+    return this.http.delete(`${this.api}/padlets/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+
   }
 
   private errorHandler(error: Error | any): Observable<any> {

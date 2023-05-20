@@ -23,6 +23,8 @@ export class PadletDetailsComponent implements OnInit {
   padlet: Padlet = PadletFactory.empty();
   dateString : string = "";
 
+  isMenuOpen : boolean = false;
+
   constructor(
     private bs: PadletService,
     private router: Router,
@@ -37,7 +39,6 @@ export class PadletDetailsComponent implements OnInit {
         this.padlet = p;
         this.getRatings();
         this.getComments();
-        console.log(p);
       });
   }
 
@@ -55,5 +56,18 @@ export class PadletDetailsComponent implements OnInit {
         entrie.comments = res;
       });
     }
+  }
+
+  toggleMenu() : void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  delete() : void {
+    if(confirm("Möchten Sie das Padlet wirklich löschen?")) {
+      this.bs.deletePadlet(this.padlet.id.toString()).subscribe(res => {
+        this.router.navigateByUrl('/padlets');
+      });
+    }
+
   }
 }

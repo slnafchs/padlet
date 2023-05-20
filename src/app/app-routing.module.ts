@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'padlets', component: PadletListComponent},
   { path: 'padlets/:id', component: PadletDetailsComponent},
   { path: 'addPadlet', component: PadletFormComponent},
+  { path: 'addPadlet/:id', component: PadletFormComponent},
   { path: 'login', component: LoginComponent},
 ];
 
