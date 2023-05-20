@@ -8,6 +8,10 @@ import { EntrieItemComponent } from './entrie-item/entrie-item.component';
 import {PadletService} from "./shared/padlet.service";
 import {AppRoutingModule} from "./app-routing.module";
 import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import { PadletFormComponent } from './padlet-form/padlet-form.component';
+import { LoginComponent } from './login/login.component';
+import {AuthenticationService} from "./shared/authentication.service";
 
 
 @NgModule({
@@ -16,12 +20,17 @@ import {HttpClientModule} from "@angular/common/http";
     PadletListComponent,
     PadletListItemComponent,
     PadletDetailsComponent,
-    EntrieItemComponent
+    EntrieItemComponent,
+    PadletFormComponent,
+    LoginComponent
   ],
   imports: [
-    BrowserModule, AppRoutingModule, HttpClientModule
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ],
-  providers: [PadletService],
+  providers: [PadletService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

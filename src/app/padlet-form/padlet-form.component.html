@@ -1,0 +1,11 @@
+<h1>Padlet erstellen</h1>
+<form class="ui large form" [formGroup]="padletForm" (ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>Titel</label>
+    <input formControlName="name">
+    <div *ngIf="errors['title']" class="ui negative message"> {{
+      errors['title'] }} </div>
+  </div>
+  <button type="submit" class="ui button" [disabled]="padletForm.invalid">Speichern</button>
+</form>

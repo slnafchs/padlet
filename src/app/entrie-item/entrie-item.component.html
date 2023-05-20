@@ -1,1 +1,36 @@
-<p>entrie-item works!</p>
+<div class="item ui card">
+  <div class="content">
+    <div class="header"><b>{{entrie?.title }}</b></div>
+    <!-- Vor- und Nachname + Erstelldatum-->
+    <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div>
+    <div class="description">{{entrie?.content }}</div><br>
+    <div class="ui small basic icon buttons">
+      <button class="ui button"><i class="edit icon"></i></button>
+      <button class="ui button"><i class="delete icon"></i></button>
+      <button class="ui button"><i class="comment icon"></i></button>
+      <button class="ui button"><i class="star icon"></i></button>
+    </div>
+  </div>
+  <!-- Kommentare und Ratings ausgeben-->
+
+  <div class="ui two item menu">
+    <a class="item active" (click)="toggleComments()">Kommentare</a>
+    <a class="item" (click)="toggleRatings()">Bewertungen</a>
+  </div>
+
+  <div *ngIf="showRatings">
+    <div *ngFor="let rating of entrie.ratings" class="extra content">
+      <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+      <div class="ui star rating" *ngIf="rating.rating">
+        <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showComments">
+    <div *ngFor="let c of entrie.comments">
+      <div class="extra">{{c.user.firstName}} {{c.user.lastName}}:</div>
+      <div class="extra">{{c.comment}}</div>
+    </div>
+  </div>
+</div>

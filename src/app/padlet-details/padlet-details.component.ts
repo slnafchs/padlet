@@ -21,11 +21,7 @@ import {formatDate} from "@angular/common";
 export class PadletDetailsComponent implements OnInit {
 
   padlet: Padlet = PadletFactory.empty();
-  entries: Entrie[] = [];
-  entrie: Entrie = EntrieFactory.empty();
-
-  user: User = UserFactory.empty();
-
+  dateString : string = "";
 
   constructor(
     private bs: PadletService,
@@ -39,15 +35,14 @@ export class PadletDetailsComponent implements OnInit {
     this.bs.getSinglePadlet(params['id'])
       .subscribe((p: Padlet) => {
         this.padlet = p;
-        this.entries = this.padlet.entries;
-        this.user = this.padlet.user;
         this.getRatings();
         this.getComments();
+        console.log(p);
       });
   }
 
   getRatings() : void {
-    for(let entrie of this.entries) {
+    for(let entrie of this.padlet?.entries) {
       this.bs.getRatingsForEntrie(entrie.id).subscribe((res: Rating[]) => {
         entrie.ratings = res;
       })
@@ -55,14 +50,10 @@ export class PadletDetailsComponent implements OnInit {
   }
 
   getComments() : void {
-    for (let entrie of this.entries) {
+    for (let entrie of this.padlet?.entries) {
       this.bs.getCommentsForEntrie(entrie.id).subscribe((res: Comment[]) => {
         entrie.comments = res;
       });
     }
-  }
-
-  getRating(rating: number) {
-    return Array(rating)
   }
 }

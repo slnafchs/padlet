@@ -6,9 +6,12 @@
   <a routerLink="padlets" class="item">Private Padlets</a>
   <a routerLink="padlets" class="item">Meine Padlets</a>
   <div class="right menu">
-    <a routerLink="login" routerLinkActive="active" class="item">Login</a>
+    <a *ngIf="!isLoggedIn()" routerLink="login" routerLinkActive="active" class="item">Login</a>
+    <a *ngIf="isLoggedIn()"  routerLink="login" routerLinkActive="active" (click)="logout()" class="item">Logout</a>
     <div class="item">
-      <div class="ui primary button">Padlet hinzufügen</div>
+      <div *ngIf="isLoggedIn()" class="ui primary button">
+        <a routerLink="addPadlet" [ngStyle]="{'color': '#ffff'}" class="extra">Padlet hinzufügen</a>
+      </div>
     </div>
   </div>
 </div><br>
