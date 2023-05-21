@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PadletFormComponent } from './padlet-form.component';
+import { EntrieFormComponent } from './entrie-form.component';
 
-describe('PadletFormComponent', () => {
-  let component: PadletFormComponent;
-  let fixture: ComponentFixture<PadletFormComponent>;
+describe('EntrieFormComponent', () => {
+  let component: EntrieFormComponent;
+  let fixture: ComponentFixture<EntrieFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PadletFormComponent ]
+      declarations: [ EntrieFormComponent ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PadletFormComponent);
+    fixture = TestBed.createComponent(EntrieFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -20,7 +20,7 @@ export class AppComponent{
   constructor(private http: HttpClient,
               private bs : PadletService,
               private authService: AuthenticationService){
-    http.get<Padlet>('https://padlet.s2010456006.student.kwmhgb.at/padlets').subscribe(val => this.padlet = val);
+    http.get<Padlet>('https://padlet.s2010456006.student.kwmhgb.at/public').subscribe(val => this.padlet = val);
   }
 
   isLoggedIn() {

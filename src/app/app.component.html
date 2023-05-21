@@ -2,9 +2,9 @@
   <div class="item">
     <img src="https://cdn.icon-icons.com/icons2/1507/PNG/512/applicationsgraphics_103770.png" alt="mypadlets">
   </div>
-  <a routerLink="padlets" routerLinkActive="active" class="item">Öffentliche Padlets</a>
-  <a routerLink="padlets" class="item">Private Padlets</a>
-  <a routerLink="padlets" class="item">Meine Padlets</a>
+  <a routerLink="public" routerLinkActive="active" class="item">Öffentliche Padlets</a>
+  <a *ngIf="isLoggedIn()" routerLink="private" class="item">Private Padlets</a>
+  <a *ngIf="isLoggedIn()" routerLink="mypadlets" class="item">Meine Padlets</a>
   <div class="right menu">
     <a *ngIf="!isLoggedIn()" routerLink="login" routerLinkActive="active" class="item">Login</a>
     <a *ngIf="isLoggedIn()"  routerLink="login" routerLinkActive="active" (click)="logout()" class="item">Logout</a>

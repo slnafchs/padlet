@@ -16,8 +16,8 @@ export class PadletService {
   private api = 'http://padlet.s2010456006.student.kwmhgb.at/api';
   constructor(private http: HttpClient) {}
 
-  getAllPadlets(): Observable<Array<Padlet>>{
-    return this.http.get<Array<Padlet>>(`${this.api}/padlets`)
+  getAllPublicPadlets(): Observable<Array<Padlet>>{
+    return this.http.get<Array<Padlet>>(`${this.api}/public`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
@@ -26,13 +26,18 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
+  getMyPadlets(user_id: number) : Observable<Array<Padlet>>{
+    return this.http.get<Array<Padlet>>(`${this.api}/mypadlets/${user_id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
   getAllEntries() : Observable<Array<Entrie>>{
     return this.http.get<Array<Entrie>>(`${this.api}/entries`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
-  getSingleEntrie(padlet_id:number, entrie_id: number) : Observable<Entrie>{
-    return this.http.get<Entrie>(`${this.api}/padlets/${padlet_id}/entries/${entrie_id}`)
+  getSingleEntrie(entrie_id: number) : Observable<Entrie>{
+    return this.http.get<Entrie>(`${this.api}/entries/${entrie_id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
@@ -74,6 +79,32 @@ export class PadletService {
     return this.http.delete(`${this.api}/padlets/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
 
+  }
+
+  createEntrie (entrie: Entrie, padlet_id: string): Observable<any> {
+    return this.http.post(`${this.api}/padlets/${padlet_id}/entries`, entrie)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  updateEntrie (entrie: Entrie): Observable<any> {
+    return this.http.put(`${this.api}/entries/${entrie.id}`, entrie)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  deleteEntrie (id: string): Observable<any> {
+    return this.http.delete(`${this.api}/entries/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+
+  }
+
+  createComment (comment: Comment, entrie_id: string): Observable<any> {
+    return this.http.post(`${this.api}/entries/${entrie_id}/comments`, comment)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  createRating (rating: Rating, entrie_id: string): Observable<any> {
+    return this.http.post(`${this.api}/entries/${entrie_id}/ratings`, rating)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   private errorHandler(error: Error | any): Observable<any> {

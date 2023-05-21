@@ -1,4 +1,4 @@
 <div class="ui middle horizontal aligned selection list">
-  <a *ngFor="let padlet of padlets" class="item bs-padlet-list-item"
+  <a *ngFor="let padlet of privPadlets" class="item bs-padlet-list-item"
      [padlet]="padlet" [routerLink]="'/padlets/'+padlet.id.toString()"></a>
 </div>

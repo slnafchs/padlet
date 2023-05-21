@@ -52,7 +52,6 @@ export class PadletFormComponent implements OnInit{
       name: [this.padlet.name, Validators.required],
       is_public: this.padlet.is_public,
     });
-    this.initPadlet();
     this.padletForm.statusChanges.subscribe(() =>
       this.updateErrorMessages());
   }
@@ -92,7 +91,7 @@ export class PadletFormComponent implements OnInit{
       this.bs.createPadlet(this.padlet).subscribe(res => {
         this.padlet = PadletFactory.empty();
         this.padletForm.reset(PadletFactory.empty());
-        this.router.navigate(["padlets"]);
+        this.router.navigate(["public"]);
       });
     }
   }

@@ -5,7 +5,7 @@ export class EntrieFactory {
 
   static empty() : Entrie{
 
-    return new Entrie(1,1, UserFactory.empty(), 1, 'Title', 'Content',  new Date(), [], []);
+    return new Entrie(1,1, UserFactory.empty(), 1, '', '',  new Date(), [], []);
   }
   static fromObject(rawEntrie: any) : Entrie{
     return new Entrie(

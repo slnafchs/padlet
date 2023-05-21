@@ -13,16 +13,13 @@ export class PadletListComponent implements OnInit{
   padlets: Padlet[] = [];
   user: User[] = [];
 
-  entries: Entrie[] = [];
-
   /*@Output() showDetailsEvent = new EventEmitter<Padlet>();*/
   constructor(
     private bs: PadletService) {}
 
   ngOnInit() {
-    this.bs.getAllPadlets().subscribe(res=>this.padlets = res);
+    this.bs.getAllPublicPadlets().subscribe(res=>this.padlets = res);
     this.bs.getUser().subscribe(res=>this.user = res);
-    this.bs.getAllEntries().subscribe(res=>this.entries = res);
   }
 
   /*

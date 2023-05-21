@@ -12,6 +12,9 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { PadletFormComponent } from './padlet-form/padlet-form.component';
 import { LoginComponent } from './login/login.component';
 import {AuthenticationService} from "./shared/authentication.service";
+import { MypadletListComponent } from './mypadlet-list/mypadlet-list.component';
+import { PrivatepadletListComponent } from './privatepadlet-list/privatepadlet-list.component';
+import { EntrieFormComponent } from './entrie-form/entrie-form.component';
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import {AuthenticationService} from "./shared/authentication.service";
     PadletDetailsComponent,
     EntrieItemComponent,
     PadletFormComponent,
-    LoginComponent
+    LoginComponent,
+    MypadletListComponent,
+    PrivatepadletListComponent,
+    EntrieFormComponent
   ],
   imports: [
     BrowserModule,

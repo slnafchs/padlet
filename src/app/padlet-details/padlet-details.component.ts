@@ -65,9 +65,9 @@ export class PadletDetailsComponent implements OnInit {
   delete() : void {
     if(confirm("Möchten Sie das Padlet wirklich löschen?")) {
       this.bs.deletePadlet(this.padlet.id.toString()).subscribe(res => {
-        this.router.navigateByUrl('/padlets');
+        this.router.navigateByUrl('/public');
       });
     }
-
   }
+
 }

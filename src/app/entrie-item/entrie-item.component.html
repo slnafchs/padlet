@@ -5,10 +5,10 @@
     <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div>
     <div class="description">{{entrie?.content }}</div><br>
     <div class="ui small basic icon buttons">
-      <button class="ui button"><i class="edit icon"></i></button>
-      <button class="ui button"><i class="delete icon"></i></button>
-      <button class="ui button"><i class="comment icon"></i></button>
-      <button class="ui button"><i class="star icon"></i></button>
+      <button class="ui button" [routerLink]="['/addEntrie', entrie.padlet_id, entrie.id]"><i class="edit icon"></i></button>
+      <button class="ui button" (click)="delete()"><i class="delete icon"></i></button>
+      <button class="ui button" (click)="addComment()"><i class="comment icon"></i></button>
+      <button class="ui button" (click)="addRating()"><i class="star icon"></i></button>
     </div>
   </div>
   <!-- Kommentare und Ratings ausgeben-->
@@ -33,4 +33,44 @@
       <div class="extra">{{c.comment}}</div>
     </div>
   </div>
+
+  <div id="comment-modal" class="ui small modal">
+    <div class="ui header">
+      Kommentar hinzufügen
+    </div>
+
+    <form class="ui small form" [formGroup]="commentForm" (ngSubmit)="submitCommentForm()">
+      <input type="hidden" formControlName="id">
+      <div class="field">
+        <input formControlName="comment">
+        <div *ngIf="errors['comment']" class="ui negative message"> {{
+          errors['comment'] }} </div>
+      </div>
+      <div class="actions">
+          <button class="ui negative button" (click)="modalClose('comment-modal')">Cancel</button>
+          <button class="ui positive button" type="submit" class="ui button" [disabled]="commentForm.invalid">Speichern</button>
+      </div>
+    </form>
+  </div>
+
+  <div id="rating-modal" class="ui small modal">
+    <div class="ui header">
+      Bewertung hinzufügen
+    </div>
+
+    <form class="ui small form" [formGroup]="ratingForm" (ngSubmit)="submitRatingForm()">
+      <input type="hidden" formControlName="id">
+      <div class="field">
+        <input type="number" formControlName="rating">
+        <div *ngIf="errors['rating']" class="ui negative message"> {{
+          errors['rating'] }} </div>
+      </div>
+      <div class="actions">
+        <button class="ui negative button" (click)="modalClose('rating-modal')">Cancel</button>
+        <button class="ui positive button" type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
+      </div>
+    </form>
+  </div>
+
+
 </div>
