@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header"><b>{{entrie?.title }}</b></div>
     <!-- Vor- und Nachname + Erstelldatum-->
-    <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div>
+    <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div><br>
     <div class="description">{{entrie?.content }}</div><br>
     <div class="ui small basic icon buttons">
       <button class="ui button" [routerLink]="['/addEntrie', entrie.padlet_id, entrie.id]"><i class="edit icon"></i></button>
@@ -23,21 +23,21 @@
       <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
       <div class="ui star rating" *ngIf="rating.rating">
         <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
-      </div>
+      </div><br>
     </div>
   </div>
 
   <div *ngIf="showComments" class="content">
     <div *ngFor="let c of entrie.comments">
-      <div class="extra">{{c.user.firstName}} {{c.user.lastName}}:</div>
-      <div class="extra">{{c.comment}}</div>
+      <div class="extra"><b>{{c.user.firstName}} {{c.user.lastName}}</b></div>
+      <div class="description">{{c.comment}}</div><br>
     </div>
   </div>
 
-  <div id="comment-modal" class="ui small modal">
-    <div class="ui header">
+  <div id="comment-modal-{{entrie_id}}" class="ui small modal" [ngStyle]="{'padding':'20px'}">
+    <h3>
       Kommentar hinzufügen
-    </div>
+    </h3>
 
     <form class="ui small form" [formGroup]="commentForm" (ngSubmit)="submitCommentForm()">
       <input type="hidden" formControlName="id">
@@ -47,16 +47,16 @@
           errors['comment'] }} </div>
       </div>
       <div class="actions">
-          <button class="ui negative button" (click)="modalClose('comment-modal')">Cancel</button>
-          <button class="ui positive button" type="submit" class="ui button" [disabled]="commentForm.invalid">Speichern</button>
+          <button class="ui negative button" (click)="modalClose()">Cancel</button>
+          <button class="ui positive button" type="submit" class="ui button blue" [disabled]="commentForm.invalid">Speichern</button>
       </div>
     </form>
   </div>
 
-  <div id="rating-modal" class="ui small modal">
-    <div class="ui header">
+  <div id="rating-modal-{{entrie_id}}" class="ui small modal" [ngStyle]="{'padding':'20px'}">
+    <h3>
       Bewertung hinzufügen
-    </div>
+    </h3>
 
     <form class="ui small form" [formGroup]="ratingForm" (ngSubmit)="submitRatingForm()">
       <input type="hidden" formControlName="id">
@@ -66,11 +66,10 @@
           errors['rating'] }} </div>
       </div>
       <div class="actions">
-        <button class="ui negative button" (click)="modalClose('rating-modal')">Cancel</button>
+        <button class="ui negative button" (click)="modalClose()">Cancel</button>
         <button class="ui positive button" type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
       </div>
     </form>
   </div>
-
 
 </div>

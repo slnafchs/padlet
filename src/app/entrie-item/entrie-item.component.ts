@@ -1,4 +1,4 @@
-import { Component, EventEmitter,Input, OnInit,Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Comment, Entrie, User} from "../shared/comment";
 import { Rating } from "../shared/rating";
 import {EntrieFactory} from "../shared/entrie-factory";
@@ -19,6 +19,8 @@ import {RatingFactory} from "../shared/rating-factory";
 })
 export class EntrieItemComponent implements OnInit{
   @Input() entrie: Entrie = EntrieFactory.empty();
+  @ViewChild("entrieID") entrieID : ElementRef | undefined;
+  entrie_id : number = 0;
 
   dateString : string = "";
 
@@ -39,7 +41,6 @@ export class EntrieItemComponent implements OnInit{
     this.commentForm = this.fbc.group({});
     this.ratingForm = this.fbr.group({});
   }
-
   ngOnInit() : void {
     if(this.entrie) {
       this.dateString = formatDate(this.entrie!.created_at, 'dd/MM/yyyy', 'en-US');
@@ -48,6 +49,7 @@ export class EntrieItemComponent implements OnInit{
       });
       this.initCommentForm();
       this.initRatingForm();
+      this.entrie_id = this.entrie.id;
     }
   }
 
@@ -120,8 +122,7 @@ export class EntrieItemComponent implements OnInit{
   }
 
   addComment() : void {
-    const modalElement = document.getElementById('comment-modal');
-    console.log(modalElement);
+    const modalElement = document.getElementById(`comment-modal-${this.entrie_id}`);
     if (modalElement) {
       modalElement.classList.add('show');
       modalElement.style.display = "block";
@@ -129,21 +130,18 @@ export class EntrieItemComponent implements OnInit{
   }
 
   addRating() : void {
-    const modalElement = document.getElementById('rating-modal');
-    console.log(modalElement);
+    const modalElement = document.getElementById(`rating-modal-${this.entrie_id}`);
     if (modalElement) {
       modalElement.classList.add('show');
       modalElement.style.display = "block";
     }
   }
 
-  modalClose(id: string) : void {
-    const modalElement = document.getElementById(id);
-    console.log(modalElement);
-    if (modalElement) {
-      modalElement.classList.remove('show');
-      modalElement.style.display = "none";
-    }
+  modalClose() : void {
+    document.querySelectorAll<HTMLElement> ('.modal').forEach(it => {
+      it.classList.remove('show');
+      it.style.display = "none";
+    });
   }
 
   async submitCommentForm() {
@@ -152,11 +150,10 @@ export class EntrieItemComponent implements OnInit{
     let user = await this.getUser(+user_id);
     this.comment.user_id = +user_id;
     this.comment.user = user;
-    this.comment.entrie_id = this.entrie.id;
 
-    this.bs.createComment(this.comment, this.entrie.id.toString()).subscribe(res => {
+    this.bs.createComment(this.comment, this.entrie_id.toString()).subscribe(res => {
       this.commentForm.reset(CommentFactory.empty());
-      this.modalClose('comment-modal');
+      this.modalClose();
       window.location.reload();
     });
   }
@@ -172,7 +169,7 @@ export class EntrieItemComponent implements OnInit{
 
     this.bs.createRating(this.rating, this.entrie.id.toString()).subscribe(res => {
       this.ratingForm.reset(CommentFactory.empty());
-      this.modalClose('rating-modal');
+      this.modalClose();
       window.location.reload();
     });
   }

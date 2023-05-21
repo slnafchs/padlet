@@ -15,6 +15,7 @@ import {Entrie} from "../shared/entrie";
   ]
 })
 export class EntrieFormComponent implements OnInit {
+  title : string = "Eintrag erstellen";
   entrieForm: FormGroup;
   entrie: Entrie = EntrieFactory.empty();
   errors: { [key: string]: string } = {};
@@ -37,6 +38,7 @@ export class EntrieFormComponent implements OnInit {
     console.log(id);
     if (id) {
       this.isUpdatingEntrie = true;
+      this.title = "Eintrag bearbeiten";
       this.bs.getSingleEntrie(id).subscribe(
         (res : Entrie) => {
           this.entrie = res;

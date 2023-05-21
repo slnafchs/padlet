@@ -15,6 +15,7 @@ import {UserFactory} from "../shared/user-factory";
 })
 export class PadletFormComponent implements OnInit{
 
+  title : string = "Padlet erstellen";
   padletForm: FormGroup;
   padlet: Padlet = PadletFactory.empty();
   errors: { [key: string]: string } = {};
@@ -36,6 +37,7 @@ export class PadletFormComponent implements OnInit{
     const id = this.route.snapshot.params["id"];
     if (id) {
       this.isUpdatingPadlet = true;
+      this.title = "Padlet bearbeiten";
       this.bs.getSinglePadlet(id).subscribe(
         (res : Padlet) => {
           this.padlet = res;
