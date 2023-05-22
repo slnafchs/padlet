@@ -7,7 +7,7 @@ import { PadletDetailsComponent } from './padlet-details/padlet-details.componen
 import { EntrieItemComponent } from './entrie-item/entrie-item.component';
 import {PadletService} from "./shared/padlet.service";
 import {AppRoutingModule} from "./app-routing.module";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import { PadletFormComponent } from './padlet-form/padlet-form.component';
 import { LoginComponent } from './login/login.component';
@@ -15,6 +15,8 @@ import {AuthenticationService} from "./shared/authentication.service";
 import { MypadletListComponent } from './mypadlet-list/mypadlet-list.component';
 import { PrivatepadletListComponent } from './privatepadlet-list/privatepadlet-list.component';
 import { EntrieFormComponent } from './entrie-form/entrie-form.component';
+import {JwtInterceptorService} from "./shared/jwt-interceptor.service";
+import {TokenInterceptorService} from "./shared/token-interceptor.service";
 
 
 @NgModule({
@@ -36,7 +38,18 @@ import { EntrieFormComponent } from './entrie-form/entrie-form.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [PadletService, AuthenticationService],
+  providers: [PadletService, AuthenticationService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

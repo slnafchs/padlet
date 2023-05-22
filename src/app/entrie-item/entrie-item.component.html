@@ -43,8 +43,6 @@
       <input type="hidden" formControlName="id">
       <div class="field">
         <input formControlName="comment">
-        <div *ngIf="errors['comment']" class="ui negative message"> {{
-          errors['comment'] }} </div>
       </div>
       <div class="actions">
           <button class="ui negative button" (click)="modalClose()">Cancel</button>
@@ -62,8 +60,16 @@
       <input type="hidden" formControlName="id">
       <div class="field">
         <input type="number" formControlName="rating">
-        <div *ngIf="errors['rating']" class="ui negative message"> {{
-          errors['rating'] }} </div>
+        <div *ngIf="ratingForm.get('rating')?.invalid &&
+          (ratingForm.get('rating')?.dirty || ratingForm.get('rating')?.touched) &&
+          ratingForm.get('rating')?.hasError('required')" class="ui negative message">
+          Bewertung muss aus einer Zahl bestehen!
+        </div>
+        <div *ngIf="ratingForm.get('rating')?.invalid &&
+          (ratingForm.get('rating')?.dirty || ratingForm.get('rating')?.touched) &&
+          ratingForm.get('rating')?.hasError('ratingRange')" class="ui negative message">
+          Bewertung muss zwischen 1 und 5 liegen!
+        </div>
       </div>
       <div class="actions">
         <button class="ui negative button" (click)="modalClose()">Cancel</button>

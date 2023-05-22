@@ -4,8 +4,11 @@
   <div class="field">
     <label>Titel</label>
     <input formControlName="name">
-    <div *ngIf="errors['title']" class="ui negative message"> {{
-      errors['title'] }} </div>
+    <div *ngIf="padletForm.get('name')?.invalid &&
+      (padletForm.get('name')?.dirty || padletForm.get('name')?.touched) &&
+      padletForm.get('name')?.hasError('required')" class="ui negative message">
+      Titel ist verpflichtend
+    </div>
   </div>
   <div class="field">
     <div class="ui checkbox">

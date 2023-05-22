@@ -25,7 +25,7 @@ export class JwtInterceptorService implements HttpInterceptor {
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
         if (err.status === 401) {
-          window.alert("You are not authorized to perform this action!");
+          window.alert("Ups! Überprüfen Sie bitte Ihr E-Mail und Passwort!");
         }
       }
     }));

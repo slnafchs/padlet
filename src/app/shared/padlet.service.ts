@@ -7,6 +7,7 @@ import {catchError, retry} from "rxjs";
 import {Rating} from "./rating";
 import {Comment} from "./comment";
 import {UserFactory} from "./user-factory";
+import {Userright} from "./userright";
 
 @Injectable({
   providedIn: 'root'
@@ -105,6 +106,22 @@ export class PadletService {
   createRating (rating: Rating, entrie_id: string): Observable<any> {
     return this.http.post(`${this.api}/entries/${entrie_id}/ratings`, rating)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  createUserright (userright: Userright): Observable<any> {
+    return this.http.post(`${this.api}/userrights`, userright)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  updateUserright (userright: Userright): Observable<any> {
+    return this.http.put(`${this.api}/userrights/${userright.padlet_id}/${userright.user_id}`, userright)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  deleteUserright (userright: Userright): Observable<any> {
+    return this.http.delete(`${this.api}/userrights/${userright.padlet_id}/${userright.user_id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+
   }
 
   private errorHandler(error: Error | any): Observable<any> {

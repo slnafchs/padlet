@@ -5,7 +5,7 @@ export class PadletFactory {
 
   static empty(): Padlet {
 
-    return new Padlet(0, "", true, 0, UserFactory.empty(), [], new Date());
+    return new Padlet(0, "", true, 0, UserFactory.empty(), [], new Date(), []);
   }
 
   static fromObject(rawPadlet: any): Padlet {
@@ -16,7 +16,8 @@ export class PadletFactory {
       rawPadlet.user_id,
       rawPadlet.user,
       rawPadlet.entries,
-      rawPadlet.created_at
+      rawPadlet.created_at,
+      rawPadlet.userrights
     );
   }
 }

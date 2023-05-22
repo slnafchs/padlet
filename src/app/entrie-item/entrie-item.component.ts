@@ -32,7 +32,6 @@ export class EntrieItemComponent implements OnInit{
 
   ratingForm: FormGroup;
   rating: Rating = RatingFactory.empty();
-  errors: { [key: string]: string } = {};
 
   constructor(private bs: PadletService,
               private router: Router,
@@ -58,8 +57,6 @@ export class EntrieItemComponent implements OnInit{
       id: this.comment.id,
       comment: [this.comment.comment, Validators.required]
     });
-    this.commentForm.statusChanges.subscribe(() =>
-      this.updateErrorMessages(this.commentForm));
   }
 
   // Custom validator function
@@ -76,26 +73,6 @@ export class EntrieItemComponent implements OnInit{
       id: this.comment.id,
       rating: [this.rating.rating, [Validators.required, this.ratingRangeValidator]]
     });
-    this.ratingForm.statusChanges.subscribe(() =>
-      this.updateErrorMessages(this.ratingForm));
-  }
-
-  updateErrorMessages(fg: FormGroup) {
-    console.log("Is form invalid? " + fg.invalid);
-    this.errors = {};
-
-    for (const message of EntrieFormErrorMessages) {
-      const control = fg.get(message.forControl);
-      if (
-        control &&
-        control.dirty &&
-        control.invalid && control.errors &&
-        control.errors[message.forValidator] &&
-        !this.errors[message.forControl]
-      ) {
-        this.errors[message.forControl] = message.text;
-      }
-    }
   }
 
   getRating(rating: number) {
