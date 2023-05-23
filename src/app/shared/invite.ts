@@ -1,10 +1,6 @@
-import { User } from "./user";
-import { Padlet } from "./padlet";
-export { User } from "./user";
-export { Padlet } from "./padlet";
-
-export class Userright {
+export class Invite {
   constructor(
+    public id: number,
     public user_id: number,
     public padlet_id: number,
     public read: boolean,

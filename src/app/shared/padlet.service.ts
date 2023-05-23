@@ -8,6 +8,7 @@ import {Rating} from "./rating";
 import {Comment} from "./comment";
 import {UserFactory} from "./user-factory";
 import {Userright} from "./userright";
+import {Invite} from "./invite";
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,11 @@ export class PadletService {
 
   getUserById(id: number) : Observable<User>{
     return this.http.get<User>(`${this.api}/users/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUserByEmail(email: string) : Observable<User>{
+    return this.http.get<User>(`${this.api}/users/mail/${email}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
@@ -118,10 +124,30 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  deleteUserright (userright: Userright): Observable<any> {
-    return this.http.delete(`${this.api}/userrights/${userright.padlet_id}/${userright.user_id}`)
+  deleteUserright (padlet_id : string, user_id : string): Observable<any> {
+    return this.http.delete(`${this.api}/userrights/${padlet_id}/${user_id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
 
+  }
+
+  createInvite (invite: Invite): Observable<any> {
+    return this.http.post(`${this.api}/invites`, invite)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  deleteInvite (id: string): Observable<any> {
+    return this.http.delete(`${this.api}/invites/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
+  }
+
+  getInviteByUserId(id: number) : Observable<Invite>{
+    return this.http.get<Invite>(`${this.api}/invites/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getInviteIfExists(padlet_id: number, user_id: number) : Observable<Invite>{
+    return this.http.get<Invite>(`${this.api}/invites/${padlet_id.toString()}/${user_id.toString()}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 
   private errorHandler(error: Error | any): Observable<any> {

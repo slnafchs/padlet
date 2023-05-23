@@ -12,8 +12,7 @@ export class Padlet {
               public user_id: number,
               public user: User,
               public entries: Entrie[],
-              public created_at: Date,
-              public userrights : Userright[]) {
+              public created_at: Date) {
   }
 
 }

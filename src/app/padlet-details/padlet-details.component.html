@@ -5,15 +5,52 @@
     <button class="ui button" [routerLink]="['/addEntrie', padlet.id]"><i class="icon add"></i></button>
     <button class="ui button" [routerLink]="['/addPadlet', padlet.id]"><i class="edit icon"></i></button>
     <button class="ui button" (click)="delete()"><i class="delete icon"></i></button>
-    <button class="ui button"><i class="share icon"></i></button>
+    <button class="ui button" (click)="inviteUser()"><i class="share icon"></i></button>
     <button class="ui button"><i class="user icon"></i></button>
   </div>
 </div>
 
+<div id="padlet-modal" class="ui small modal" [ngStyle]="{'padding':'20px'}">
+  <h3>
+    Benutzer einladen
+  </h3>
+
+  <form class="ui small form" [formGroup]="inviteForm" (ngSubmit)="submitInviteForm()">
+    <input type="hidden" formControlName="id">
+    <div class="field">
+      <input formControlName="user">
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" id="read" name="read" formControlName="read">
+        <label for="read">Lesen</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" id="edit" name="edit" formControlName="edit">
+        <label for="read">Bearbeiten</label>
+      </div>
+    </div>
+    <div class="field">
+      <div class="ui checkbox">
+        <input type="checkbox" id="Delete" name="Delete" formControlName="Delete">
+        <label for="Delete">Löschen</label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="ui negative button" (click)="modalClose()">Cancel</button>
+      <button class="ui positive button" type="submit" class="ui button blue" [disabled]="inviteForm.invalid">Speichern</button>
+    </div>
+  </form>
+</div>
 
 <div class="content">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
 <br>
 <div *ngFor="let entrie of padlet?.entries" >
   <bs-entrie-item [entrie]=entrie></bs-entrie-item><br>
 </div>
+
+
 <!--<button [routerLink]="'/padlets'" class="ui blue button">Zurück zur Padletliste</button>-->

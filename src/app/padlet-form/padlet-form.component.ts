@@ -6,6 +6,7 @@ import {PadletService} from "../shared/padlet.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PadletFormErrorMessages} from "./padlet-form-error-messages";
 import {UserFactory} from "../shared/user-factory";
+import {Userright} from "../shared/userright";
 
 @Component({
   selector: 'bs-padlet-form',
@@ -50,7 +51,6 @@ export class PadletFormComponent implements OnInit{
 
   initPadlet() : void {
     this.padletForm = this.fb.group({
-      id: this.padlet.id,
       name: [this.padlet.name, Validators.required],
       is_public: this.padlet.is_public,
     });
@@ -81,19 +81,23 @@ export class PadletFormComponent implements OnInit{
     this.padlet.is_public = this.isPublic;
     let user_id : string = this.bs.getCurrentUserId();
     let user = await this.getUser(+user_id);
-    this.padlet.user_id = +user_id;
-    this.padlet.user = user;
-    this.padlet.entries = [];
 
     if (this.isUpdatingPadlet) {
-      this.bs.updatePadlet(this.padlet).subscribe(res => {
-        this.router.navigate(["padlets", this.padlet.id]);
+      this.bs.updatePadlet(this.padlet).subscribe((res: Padlet)=> {
+        let userright = new Userright(+user_id, res.id, true, true, true);
+        this.bs.createUserright(userright).subscribe(res => this.router.navigate(["public"]));
       });
     } else {
-      this.bs.createPadlet(this.padlet).subscribe(res => {
+      this.padlet.user_id = +user_id;
+      this.padlet.user = user;
+      this.padlet.entries = [];
+
+      this.bs.createPadlet(this.padlet).subscribe((res: Padlet) => {
         this.padlet = PadletFactory.empty();
         this.padletForm.reset(PadletFactory.empty());
-        this.router.navigate(["public"]);
+
+        let userright = new Userright(+user_id, res.id, true, true, true);
+        this.bs.createUserright(userright).subscribe(res => this.router.navigate(["public"]));
       });
     }
   }
