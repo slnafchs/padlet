@@ -78,20 +78,24 @@ export class EntrieFormComponent implements OnInit {
   }
 
   async submitForm() {
-    this.entrie = EntrieFactory.fromObject(this.entrieForm.value);
-    let user_id : string = this.bs.getCurrentUserId();
-    let user = await this.getUser(+user_id);
-    this.entrie.user_id = +user_id;
-    this.entrie.user = user
-    this.entrie.padlet_id = this.padlet_id;
-    this.entrie.comments = [];
-    this.entrie.ratings = [];
 
     if (this.isUpdatingEntrie) {
+      let entrie = EntrieFactory.fromObject(this.entrieForm.value);
+      this.entrie.title = entrie.title;
+      this.entrie.content = entrie.content;
       this.bs.updateEntrie(this.entrie).subscribe(res => {
         this.router.navigate(["padlets", this.padlet_id]);
       });
     } else {
+      this.entrie = EntrieFactory.fromObject(this.entrieForm.value);
+      let user_id : string = this.bs.getCurrentUserId();
+      let user = await this.getUser(+user_id);
+      this.entrie.user_id = +user_id;
+      this.entrie.user = user
+      this.entrie.padlet_id = this.padlet_id;
+      this.entrie.comments = [];
+      this.entrie.ratings = [];
+
       this.bs.createEntrie(this.entrie, this.padlet_id.toString()).subscribe(res => {
         this.entrie = EntrieFactory.empty();
         this.entrieForm.reset(PadletFactory.empty());

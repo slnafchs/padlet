@@ -1,0 +1,9 @@
+<h2 *ngIf="pendingInvites.length == 0">Derzeit warten keine Einladungen.</h2>
+<div class="ui relaxed divided list">
+  <div class="item" *ngFor="let invite of pendingInvites">
+    <div class="content">
+      <bs-invite-item [invite]="invite"></bs-invite-item>
+    </div>
+  </div>
+</div>
+

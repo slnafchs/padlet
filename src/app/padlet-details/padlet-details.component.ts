@@ -8,6 +8,8 @@ import {Comment} from "../shared/comment";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Invite} from "../shared/invite";
 import {InviteFactory} from "../shared/invite-factory";
+import { Userright } from '../shared/userright';
+import { UserrightFactory } from '../shared/userright-factory';
 
 @Component({
   selector: 'bs-padlet-details',
@@ -24,6 +26,8 @@ export class PadletDetailsComponent implements OnInit {
   invite : Invite = InviteFactory.empty();
   invite_usermail : string = "";
   isMenuOpen : boolean = false;
+  isOwner : boolean = false;
+  userrights : Userright = UserrightFactory.empty();
 
   constructor(
     private bs: PadletService,
@@ -41,6 +45,22 @@ export class PadletDetailsComponent implements OnInit {
         this.padlet = p;
         this.getRatings();
         this.getComments();
+        let user_id : string = <string>sessionStorage.getItem('userId')
+        if(this.padlet.user_id.toString() == user_id) {
+          this.isOwner = true;
+        }
+        // get userrights of current user
+        this.bs.getSingleUserright(this.padlet.id.toString(), user_id).subscribe((res: any) => {
+          let userright = Userright.mapUserright(res);
+          if(userright.user_id == undefined) {
+            this.userrights = new Userright(+user_id, this.padlet.id, true, false, false)
+          }
+          else {
+            this.userrights = userright;
+            console.log(this.userrights);
+
+          }
+        })
       });
     this.initInvite();
   }
@@ -95,6 +115,7 @@ export class PadletDetailsComponent implements OnInit {
   }
 
   modalClose() : void {
+    this.invite_usermail = "";
     document.querySelectorAll<HTMLElement> ('.modal').forEach(it => {
       it.classList.remove('show');
       it.style.display = "none";
@@ -108,19 +129,25 @@ export class PadletDetailsComponent implements OnInit {
 
       let user = await this.getUserByMail(this.invite_usermail);
       if(user.id) {
-        this.invite = InviteFactory.fromObject(this.inviteForm.value);
-        this.invite.user_id = user.id;
-        this.invite.padlet_id = this.padlet.id;
+        if(user.id != this.padlet.user_id) {
+          this.invite = InviteFactory.fromObject(this.inviteForm.value);
+          this.invite.user_id = user.id;
+          this.invite.padlet_id = this.padlet.id;
 
-        let check = await this.deleteInviteIfExists(this.invite);
+          let check = await this.deleteInviteIfExists(this.invite);
 
-        this.bs.createInvite(this.invite).subscribe(res => {
-          this.invite = InviteFactory.empty();
-          this.modalClose();
-        });
+          this.bs.createInvite(this.invite).subscribe(res => {
+            this.invite = InviteFactory.empty();
+            this.modalClose();
+            window.alert("Einladung erfolgreich versendet.");
+          });
+        }
+        else {
+          window.alert("Dieses Padlet gehört bereits Ihnen.");
+        }
       }
       else {
-        window.alert(`Benutzer mit E-Mail ${this.invite_usermail} konnte nicht gefunden werden.`)
+        window.alert(`Benutzer mit E-Mail ${this.invite_usermail} konnte nicht gefunden werden.`);
       }
     }
 

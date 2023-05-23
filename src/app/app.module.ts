@@ -17,6 +17,10 @@ import { PrivatepadletListComponent } from './privatepadlet-list/privatepadlet-l
 import { EntrieFormComponent } from './entrie-form/entrie-form.component';
 import {JwtInterceptorService} from "./shared/jwt-interceptor.service";
 import {TokenInterceptorService} from "./shared/token-interceptor.service";
+import { MyinvitesListComponent } from './myinvites-list/myinvites-list.component';
+import { InviteItemComponent } from './invite-item/invite-item.component';
+import { UserrightsListComponent } from './userrights-list/userrights-list.component';
+import { UserrightItemComponent } from './userright-item/userright-item.component';
 
 
 @NgModule({
@@ -30,7 +34,11 @@ import {TokenInterceptorService} from "./shared/token-interceptor.service";
     LoginComponent,
     MypadletListComponent,
     PrivatepadletListComponent,
-    EntrieFormComponent
+    EntrieFormComponent,
+    MyinvitesListComponent,
+    InviteItemComponent,
+    UserrightsListComponent,
+    UserrightItemComponent
   ],
   imports: [
     BrowserModule,

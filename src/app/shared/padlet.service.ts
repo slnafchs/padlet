@@ -6,7 +6,6 @@ import {Observable, throwError} from "rxjs";
 import {catchError, retry} from "rxjs";
 import {Rating} from "./rating";
 import {Comment} from "./comment";
-import {UserFactory} from "./user-factory";
 import {Userright} from "./userright";
 import {Invite} from "./invite";
 
@@ -114,6 +113,26 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
+  getAllUserrights(): Observable<Array<any>>{
+    return this.http.get<Array<any>>(`${this.api}/userrights`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUserrightsForPadlet(id: string) : Observable<Array<any>> {
+    return this.http.get<Array<any>>(`${this.api}/userrights/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getUserrightsForUser(id: string) : Observable<Array<any>> {
+    return this.http.get<Array<any>>(`${this.api}/userrightsuser/${id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
+  getSingleUserright(padlet_id: string, user_id: string): Observable<any>{
+    return this.http.get<any>(`${this.api}/userrights/${padlet_id}/${user_id}`)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
+  }
+
   createUserright (userright: Userright): Observable<any> {
     return this.http.post(`${this.api}/userrights`, userright)
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
@@ -140,8 +159,8 @@ export class PadletService {
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
-  getInviteByUserId(id: number) : Observable<Invite>{
-    return this.http.get<Invite>(`${this.api}/invites/${id}`)
+  getInvitesByUserId(id: number) : Observable<Array<Invite>>{
+    return this.http.get<Array<any>>(`${this.api}/invites/${id}`)
       .pipe(retry(3)).pipe(catchError(this.errorHandler))
   }
 

@@ -11,4 +11,10 @@ export class Userright {
     public edit: boolean,
     public Delete: boolean
   ) {}
+
+  // because angular doesn't allow lowercase 'delete'
+  static mapUserright(obj: any) : Userright{
+    let userright = new Userright(obj['user_id'], obj['padlet_id'], obj['read'], obj['edit'], obj['delete']);
+    return userright;
+  }
 }

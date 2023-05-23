@@ -10,6 +10,9 @@ import {CommentFactory} from "../shared/comment-factory";
 import {EntrieFormErrorMessages} from "../entrie-form/entrie-form-error-messages";
 import {PadletFactory} from "../shared/padlet-factory";
 import {RatingFactory} from "../shared/rating-factory";
+import { Userright } from '../shared/userright';
+import { UserrightFactory } from '../shared/userright-factory';
+import { AuthenticationService } from '../shared/authentication.service';
 
 @Component({
   selector: 'bs-entrie-item',
@@ -19,6 +22,7 @@ import {RatingFactory} from "../shared/rating-factory";
 })
 export class EntrieItemComponent implements OnInit{
   @Input() entrie: Entrie = EntrieFactory.empty();
+  @Input() userrights: Userright = UserrightFactory.empty();
   @ViewChild("entrieID") entrieID : ElementRef | undefined;
   entrie_id : number = 0;
 
@@ -34,6 +38,7 @@ export class EntrieItemComponent implements OnInit{
   rating: Rating = RatingFactory.empty();
 
   constructor(private bs: PadletService,
+              private authService: AuthenticationService,
               private router: Router,
               private fbc: FormBuilder,
               private fbr: FormBuilder) {
@@ -161,4 +166,8 @@ export class EntrieItemComponent implements OnInit{
         });
     })
   }
+
+  isLoggedIn() {
+    return this.authService.isLoggedIn();
+  }  
 }

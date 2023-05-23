@@ -15,8 +15,8 @@ export class PadletListItemComponent implements OnInit {
 
   dateString : string = "";
 
-  constructor(private bs: PadletService) {
-  }
+  constructor(private bs: PadletService) {}
+
   ngOnInit() {
     if(this.padlet) {
       this.dateString = formatDate(this.padlet!.created_at, 'dd/MM/yyyy', 'en-US');

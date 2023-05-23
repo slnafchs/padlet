@@ -1,12 +1,12 @@
 <div [ngStyle]="{'display': 'flex'}">
   <h1 [ngStyle]="{'display': 'inline', 'margin': '0px', 'margin-right': '1rem'}">{{ padlet?.name }}</h1>
-  <button class="ui small basic icon button" (click)="toggleMenu()"><i class="setting icon"></i></button>
+  <button *ngIf="userrights.edit" class="ui small basic icon button" (click)="toggleMenu()"><i class="setting icon"></i></button>
   <div *ngIf="isMenuOpen" class="ui small basic icon buttons">
-    <button class="ui button" [routerLink]="['/addEntrie', padlet.id]"><i class="icon add"></i></button>
-    <button class="ui button" [routerLink]="['/addPadlet', padlet.id]"><i class="edit icon"></i></button>
-    <button class="ui button" (click)="delete()"><i class="delete icon"></i></button>
-    <button class="ui button" (click)="inviteUser()"><i class="share icon"></i></button>
-    <button class="ui button"><i class="user icon"></i></button>
+    <button *ngIf="userrights.edit" class="ui button" [routerLink]="['/addEntrie', padlet.id]"><i class="icon add"></i></button>
+    <button *ngIf="isOwner" class="ui button" [routerLink]="['/addPadlet', padlet.id]"><i class="edit icon"></i></button>
+    <button *ngIf="isOwner"class="ui button" (click)="delete()"><i class="delete icon"></i></button>
+    <button *ngIf="isOwner"class="ui button" (click)="inviteUser()"><i class="share icon"></i></button>
+    <button *ngIf="isOwner"class="ui button" [routerLink]="['/userrightslist', padlet.id]"><i class="user icon"></i></button>
   </div>
 </div>
 
@@ -38,9 +38,8 @@
         <label for="Delete">Löschen</label>
       </div>
     </div>
-
     <div class="actions">
-      <button class="ui negative button" (click)="modalClose()">Cancel</button>
+      <button class="ui negative button" type="button" (click)="modalClose()">Cancel</button>
       <button class="ui positive button" type="submit" class="ui button blue" [disabled]="inviteForm.invalid">Speichern</button>
     </div>
   </form>
@@ -49,7 +48,7 @@
 <div class="content">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
 <br>
 <div *ngFor="let entrie of padlet?.entries" >
-  <bs-entrie-item [entrie]=entrie></bs-entrie-item><br>
+  <bs-entrie-item [entrie]=entrie [userrights]=userrights></bs-entrie-item><br>
 </div>
 
 

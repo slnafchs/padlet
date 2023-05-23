@@ -5,10 +5,10 @@
     <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div><br>
     <div class="description">{{entrie?.content }}</div><br>
     <div class="ui small basic icon buttons">
-      <button class="ui button" [routerLink]="['/addEntrie', entrie.padlet_id, entrie.id]"><i class="edit icon"></i></button>
-      <button class="ui button" (click)="delete()"><i class="delete icon"></i></button>
-      <button class="ui button" (click)="addComment()"><i class="comment icon"></i></button>
-      <button class="ui button" (click)="addRating()"><i class="star icon"></i></button>
+      <button *ngIf="userrights.edit" class="ui button" [routerLink]="['/addEntrie', entrie.padlet_id, entrie.id]"><i class="edit icon"></i></button>
+      <button *ngIf="userrights.Delete" class="ui button" (click)="delete()"><i class="delete icon"></i></button>
+      <button *ngIf="isLoggedIn()" class="ui button" (click)="addComment()"><i class="comment icon"></i></button>
+      <button *ngIf="isLoggedIn()" class="ui button" (click)="addRating()"><i class="star icon"></i></button>
     </div>
   </div>
   <!-- Kommentare und Ratings ausgeben-->

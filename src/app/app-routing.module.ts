@@ -7,6 +7,8 @@ import {LoginComponent} from "./login/login.component";
 import {MypadletListComponent} from "./mypadlet-list/mypadlet-list.component";
 import {PrivatepadletListComponent} from "./privatepadlet-list/privatepadlet-list.component";
 import {EntrieFormComponent} from "./entrie-form/entrie-form.component";
+import { MyinvitesListComponent } from "./myinvites-list/myinvites-list.component";
+import { UserrightsListComponent } from "./userrights-list/userrights-list.component";
 
 const routes: Routes = [
   { path: '', redirectTo: 'public', pathMatch: 'full'},
@@ -18,6 +20,8 @@ const routes: Routes = [
   { path: 'addPadlet/:id', component: PadletFormComponent},
   { path: 'addEntrie/:padlet_id', component: EntrieFormComponent},
   { path: 'addEntrie/:padlet_id/:entrie_id', component: EntrieFormComponent},
+  { path: 'myinvites', component: MyinvitesListComponent},
+  { path: 'userrightslist/:padlet_id', component: UserrightsListComponent},
   { path: 'login', component: LoginComponent},
 ];
 

@@ -40,7 +40,8 @@ export class LoginComponent implements OnInit {
       this.authService.login(val.username, val.password).subscribe((res:any) => {
         console.log(res);
         this.authService.setSessionStorage((res as Response).access_token);
-        this.router.navigateByUrl("/");
+        this.router.navigateByUrl("/").then(() => window.location.reload());
+         // for invite checking
       });
     }
   }

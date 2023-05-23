@@ -6,6 +6,10 @@
   <a *ngIf="isLoggedIn()" routerLink="private" class="item">Private Padlets</a>
   <a *ngIf="isLoggedIn()" routerLink="mypadlets" class="item">Meine Padlets</a>
   <div class="right menu">
+    <a *ngIf="isLoggedIn()"  routerLink="myinvites" routerLinkActive="active" class="item" [ngStyle]="{'display': 'flex'}">
+      <i [ngStyle]="{'display': 'inline'}"class="icon envelope outline"></i>
+      <h4 [ngStyle]="{'display': 'inline', 'margin': '0px'}">{{pendingInvites.length}}</h4>
+    </a>
     <a *ngIf="!isLoggedIn()" routerLink="login" routerLinkActive="active" class="item">Login</a>
     <a *ngIf="isLoggedIn()"  routerLink="login" routerLinkActive="active" (click)="logout()" class="item">Logout</a>
     <div class="item">
