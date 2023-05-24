@@ -45,10 +45,12 @@
   </form>
 </div>
 
-<div class="content">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
+<div class="content" [ngStyle]="{'margin-bottom':'4rem'}">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
 <br>
+<div class="ui grid container cards">
 <div *ngFor="let entrie of padlet?.entries" >
   <bs-entrie-item [entrie]=entrie [userrights]=userrights></bs-entrie-item><br>
+</div>
 </div>
 
 
