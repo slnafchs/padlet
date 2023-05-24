@@ -51,6 +51,7 @@ export class PadletFormComponent implements OnInit{
 
   initPadlet() : void {
     this.padletForm = this.fb.group({
+      id: this.padlet.id,
       name: [this.padlet.name, Validators.required],
       is_public: this.padlet.is_public,
     });
@@ -77,17 +78,18 @@ export class PadletFormComponent implements OnInit{
   }
 
   async submitForm() {
-    this.padlet = PadletFactory.fromObject(this.padletForm.value);
-    this.padlet.is_public = this.isPublic;
-    let user_id : string = this.bs.getCurrentUserId();
-    let user = await this.getUser(+user_id);
-
     if (this.isUpdatingPadlet) {
-      this.bs.updatePadlet(this.padlet).subscribe((res: Padlet)=> {
-        let userright = new Userright(+user_id, res.id, true, true, true);
-        this.bs.createUserright(userright).subscribe(res => this.router.navigate(["public"]));
+      let padlet = PadletFactory.fromObject(this.padletForm.value);
+      this.padlet.name = padlet.name;
+      this.padlet.is_public = padlet.is_public;
+      this.bs.updatePadlet(this.padlet).subscribe(() => {
+        this.router.navigate(["padlets", this.padlet.id]);
       });
     } else {
+      this.padlet = PadletFactory.fromObject(this.padletForm.value);
+      this.padlet.is_public = this.isPublic;
+      let user_id : string = this.bs.getCurrentUserId();
+      let user = await this.getUser(+user_id);
       this.padlet.user_id = +user_id;
       this.padlet.user = user;
       this.padlet.entries = [];
@@ -106,10 +108,10 @@ export class PadletFormComponent implements OnInit{
     return new Promise((resolve, reject) => {
       let response = this.bs.getUserById(id).subscribe((res: User) => {
           resolve(res);
-      },
-      error => {
-        reject("Error getting user.")
-      });
+        },
+        error => {
+          reject("Error getting user.")
+        });
     })
   }
 
