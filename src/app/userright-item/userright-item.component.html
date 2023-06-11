@@ -1,7 +1,7 @@
 <div [ngStyle]="{'padding': '20px 0'}">
   <h3 [ngStyle]="{'display': 'inline-block', 'margin-right': '1em'}"> {{user.firstName}} {{user.lastName}}</h3>
   <div class="ui small basic icon buttons">
-    <button class="ui button" (click)="delete()"><i class="delete icon"></i></button>
+    <button *ngIf="canDelete" class="ui button" (click)="delete()"><i class="delete icon"></i></button>
   </div>
   <div>
     <h5 [ngStyle]="{'display': 'inline-block'}">Berechtigungen: </h5>

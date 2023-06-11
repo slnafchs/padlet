@@ -20,7 +20,6 @@ export class UserrightsListComponent implements OnInit{
 
   ngOnInit(): void {
     const id = this.route.snapshot.params["padlet_id"];
-    console.log(id);
     this.bs.getUserrightsForPadlet(id.toString()).subscribe((res: any[]) => {
       for(let obj of res) {
         this.userrights.push(Userright.mapUserright(obj));
