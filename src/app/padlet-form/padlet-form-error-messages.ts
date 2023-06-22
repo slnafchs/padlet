@@ -6,6 +6,7 @@ export class ErrorMessage {
   ) {}
 }
 
+//Fehlermeldungen für Padlet Formular
 export const PadletFormErrorMessages = [
   new ErrorMessage('title', 'required', 'Ein Padlet Titel muss angegeben werden')
 ];

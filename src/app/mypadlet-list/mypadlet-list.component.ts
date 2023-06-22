@@ -9,16 +9,20 @@ import {PadletService} from "../shared/padlet.service";
   ]
 })
 export class MypadletListComponent implements OnInit {
-  padlets: Padlet[] = [];
+  padlets: Padlet[] = []; // leeres padlet array
 
   /*@Output() showDetailsEvent = new EventEmitter<Padlet>();*/
   constructor(
-    private bs: PadletService) {}
+    private bs: PadletService) {} // padlet service injizieren
 
   ngOnInit() {
+    // user id von eingeloggtem user aus sessionStorage holen
     let user_id = <string>sessionStorage.getItem('userId');
+    // wenn user id gültig -> alle padlets vom user anzeigen
     if(user_id) {
-      this.bs.getMyPadlets(+user_id).subscribe(res=>this.padlets = res);
+      // mit service werden alle padlets von der user id geholt
+      this.bs.getMyPadlets(+user_id).subscribe((res : Padlet[]) =>this.padlets = res);
+      // ergebnis wird in lokaler padlet liste (array) gespeichert
 
     }
   }

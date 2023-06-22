@@ -17,20 +17,28 @@ export class UserrightItemComponent {
 
   constructor( private bs : PadletService) {}
 
+  //initalisierung von Userright
   ngOnInit(): void {
+    //getUserById von service holt User von Userright
     this.bs.getUserById(this.userright.user_id).subscribe((res: User) => {
+      //ergebnis wird in lokalen user gespeichert
       this.user = res;
+      //getSinglePadlet von service holt Padlet von Userright
       this.bs.getSinglePadlet(this.userright.padlet_id).subscribe((res: Padlet) => {
+        //wenn User von Userright und User von Padlet (Owner) gleich ist
         if(this.userright.user_id == res.user_id) {
+          //dann kann man Userright nicht löschen
           this.canDelete = false;
         }
       });
     });
   }
 
+  //löschen von Userright
   delete() : void {
+    //deleteUserright von service löscht Userright
     this.bs.deleteUserright(this.userright.padlet_id.toString(), this.userright.user_id.toString()).subscribe(() => {
-      window.location.reload();
+      window.location.reload(); //Seite neu laden
     });
   }
 }

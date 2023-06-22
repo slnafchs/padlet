@@ -1,18 +1,28 @@
+<!-- Formular für Erstellung/Aktualisierung von Eintrag-->
+
+<!-- Property Binding @entrie-form.component.ts-->
 <h1>{{title}}</h1>
+<!--Erstellt ein HTML-Formular und bindet es an die Angular-Formulargruppe entrieForm-->
+<!--Event-Handler submitForm() wird aufgerufen, wenn das Formular abgesendet wird.-->
 <form class="ui large form" [formGroup]="entrieForm" (ngSubmit)="submitForm()">
+
+  <!-- verstecktes Eingabefeld, das an das Formularfeld id gebunden ist. Es wird verwendet, um den Wert der ID zu speichern. -->
   <input type="hidden" formControlName="id">
   <div class="field">
     <label>Titel</label>
     <input formControlName="title">
+    <!--  Zeigt eine Fehlermeldung an, wenn das Feld title ungültig ist. -->
     <div *ngIf="errors['title']" class="ui negative message"> {{
       errors['title'] }} </div>
   </div>
   <div class="field">
     <label>Text</label>
     <textarea formControlName="content"></textarea>
+    <!--  Zeigt eine Fehlermeldung an, wenn das Feld text ungültig ist. -->
     <div *ngIf="errors['text']" class="ui negative message"> {{
       errors['text'] }} </div>
   </div>
+  <!-- Erstellt eine Schaltfläche, um das Formular abzusenden. Die Schaltfläche ist blau und deaktiviert, wenn das Formular ungültig ist.-->
   <button type="submit" class="ui button blue" [disabled]="entrieForm.invalid">Speichern</button>
 </form>
 

@@ -10,6 +10,7 @@ import {EntrieFormComponent} from "./entrie-form/entrie-form.component";
 import { MyinvitesListComponent } from "./myinvites-list/myinvites-list.component";
 import { UserrightsListComponent } from "./userrights-list/userrights-list.component";
 
+// Deklaration der Routen, Verweis auf Komponenten
 const routes: Routes = [
   { path: '', redirectTo: 'public', pathMatch: 'full'},
   { path: 'public', component: PadletListComponent},

@@ -1,9 +1,12 @@
+<!--Padlet Formular (bei Erstellen oder Aktualisieren-->
+
 <h1>{{title}}</h1>
 <form class="ui large form" [formGroup]="padletForm" (ngSubmit)="submitForm()">
   <input type="hidden" formControlName="id">
   <div class="field">
     <label>Titel</label>
     <input formControlName="name">
+    <!-- Wirft error wenn kein Titel eingetragen ist -->
     <div *ngIf="padletForm.get('name')?.invalid &&
       (padletForm.get('name')?.dirty || padletForm.get('name')?.touched) &&
       padletForm.get('name')?.hasError('required')" class="ui negative message">
@@ -12,6 +15,8 @@
   </div>
   <div class="field">
     <div class="ui checkbox">
+      <!-- Wenn sich value von checkbox ändert (user clicked darauf) -> (change) wird getriggert -->
+      <!-- und somit toggleIsPublic() aufgerufen mid event von checkbox -->
       <input type="checkbox" id="isPublic" name="is_public" formControlName="is_public" (change)="toggleIsPublic($event)" [value]="isPublic" checked>
       <label for="isPublic">Öffentlich</label>
     </div>

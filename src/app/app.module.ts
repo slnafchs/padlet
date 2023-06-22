@@ -23,6 +23,7 @@ import { UserrightsListComponent } from './userrights-list/userrights-list.compo
 import { UserrightItemComponent } from './userright-item/userright-item.component';
 
 
+// Deklaration der Komponenten
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +47,8 @@ import { UserrightItemComponent } from './userright-item/userright-item.componen
     HttpClientModule,
     ReactiveFormsModule
   ],
+
+  // HTTP Interceptors im providers Block registrieren
   providers: [PadletService, AuthenticationService,
     {
       provide: HTTP_INTERCEPTORS,

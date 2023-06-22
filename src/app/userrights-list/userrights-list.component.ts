@@ -10,7 +10,7 @@ import { Userright } from '../shared/userright';
   ]
 })
 export class UserrightsListComponent implements OnInit{
-  userrights : Userright[] = []
+  userrights : Userright[] = [] //Array mit Userrights
 
   constructor(
     private bs: PadletService,
@@ -18,10 +18,14 @@ export class UserrightsListComponent implements OnInit{
   ) {
   }
 
+  //initialisieren von Userright-Liste
   ngOnInit(): void {
+    //route param wird in const id gespeichert
     const id = this.route.snapshot.params["padlet_id"];
+    //getUserrightsForPadlet() von service holt Userrights für bestimmtes Padlet
     this.bs.getUserrightsForPadlet(id.toString()).subscribe((res: any[]) => {
       for(let obj of res) {
+        //Objekte von Ergebnis werden gemappt und Userrights werden in Array gespeichert
         this.userrights.push(Userright.mapUserright(obj));
       }
     });

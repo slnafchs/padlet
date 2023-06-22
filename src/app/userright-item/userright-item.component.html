@@ -1,3 +1,5 @@
+<!--Ansicht von einzelnen Userright-->
+
 <div [ngStyle]="{'padding': '20px 0'}">
   <h3 [ngStyle]="{'display': 'inline-block', 'margin-right': '1em'}"> {{user.firstName}} {{user.lastName}}</h3>
   <div class="ui small basic icon buttons">
@@ -5,6 +7,7 @@
   </div>
   <div>
     <h5 [ngStyle]="{'display': 'inline-block'}">Berechtigungen: </h5>
+    <!--  Wenn *ngIf="userright.read" = true dann zeigt es Lesen an -->
     <div *ngIf="userright.read" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Lesen</label></div>
     <div *ngIf="userright.edit" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Bearbeiten</label></div>
     <div *ngIf="userright.Delete" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Löschen</label></div>

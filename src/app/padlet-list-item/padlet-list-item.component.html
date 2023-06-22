@@ -1,7 +1,11 @@
 <div class="ui item card">
   <div class="content">
-    <div class="header">{{ padlet?.name }}</div><br>
+    <!-- name kommt vom Padlet, das übergeben wurde (name -> siehe padlet.ts) -->
+    <!-- padlet -> @Input() padlet: Padlet in padlet-list-item.component.ts -->
+    <div class="header">{{ padlet?.name }}</div><br> <!-- Name von Padlet-->
     <div class="metadata">
+      <!-- user: padlet.ts -> user -> user.ts -> firstName-->
+      <!-- dateString in padlet-list-item.component.ts -->
       <div >{{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}} | {{dateString}}</div>
     </div><br>
   </div>

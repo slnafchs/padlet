@@ -1,25 +1,38 @@
+<!-- Zeigt das Padlet in der Detailansicht -->
 <div [ngStyle]="{'display': 'flex'}">
   <h1 [ngStyle]="{'display': 'inline', 'margin': '0px', 'margin-right': '1rem'}">{{ padlet?.name }}</h1>
+  <!-- wenn Nutzer userright "edit" hat, dann sieht ein Icon mit Einstellungen -->
+  <!-- (click)="toggleMenu() -> es öffnet sich ein Toggle Menü, toggleMenu() in der component.ts -->
   <button *ngIf="userrights.edit" class="ui small basic icon button" (click)="toggleMenu()"><i class="setting icon"></i></button>
+  <!-- wenn das Menü offen ist, sieht man je nach Nutzerrecht (bzw. ob man Owner ist) weitere Buttons -->
   <div *ngIf="isMenuOpen" class="ui small basic icon buttons">
+  <!-- wenn User userright "edit" hat, dann gibt Button "Entrie erstellen" der auf Route /addEntrie (also der EntrieForm) verweist-->
     <button *ngIf="userrights.edit" class="ui button" [routerLink]="['/addEntrie', padlet.id]"><i class="icon add"></i></button>
-    <button *ngIf="isOwner" class="ui button" [routerLink]="['/addPadlet', padlet.id]"><i class="edit icon"></i></button>
+  <!--  wenn User Owner von padlet ist, dann kommen Buttons "Padlet bearbeiten (/addPadlet ist in app-routing.module.ts) -->
+    <button *ngIf="isOwner"class="ui button" [routerLink]="['/addPadlet', padlet.id]"><i class="edit icon"></i></button>
+    <!-- wenn User Owner ist, dann kann er es löschen -> delete() in component.ts-->
     <button *ngIf="isOwner"class="ui button" (click)="delete()"><i class="delete icon"></i></button>
+    <!-- wenn User Owner ist, dann kann er User einladen -> inviteUser() in component.ts-->
     <button *ngIf="isOwner"class="ui button" (click)="inviteUser()"><i class="share icon"></i></button>
+    <!-- wenn User Owner ist, dann kann er die Liste der Userrights sehen -->
     <button *ngIf="isOwner"class="ui button" [routerLink]="['/userrightslist', padlet.id]"><i class="user icon"></i></button>
   </div>
 </div>
 
+<!-- User einladen -->
 <div id="padlet-modal" class="ui small modal" [ngStyle]="{'padding':'20px'}">
   <h3>
     Benutzer einladen
   </h3>
 
+  <!-- Formular für User-Einladungen-->
   <form class="ui small form" [formGroup]="inviteForm" (ngSubmit)="submitInviteForm()">
     <input type="hidden" formControlName="id">
+  <!-- Eingabe der E-Mail-->
     <div class="field">
       <input formControlName="user">
     </div>
+    <!-- Checkboxen für Userrights -->
     <div class="field">
       <div class="ui checkbox">
         <input type="checkbox" id="read" name="read" formControlName="read">
@@ -39,19 +52,21 @@
       </div>
     </div>
     <div class="actions">
+      <!-- Klick auf "Cancel" -> Modul schließt sich -->
       <button class="ui negative button" type="button" (click)="modalClose()">Cancel</button>
+      <!-- Klick auf "Speichern" -> submitInviteForm wird aufgerufen -->
       <button class="ui positive button" type="submit" class="ui button blue" [disabled]="inviteForm.invalid">Speichern</button>
     </div>
   </form>
 </div>
 
+<!-- Name von Ersteller (Vor- und Nachname) -->
 <div class="content" [ngStyle]="{'margin-bottom':'4rem'}">von {{ padlet?.user?.firstName}} {{ padlet?.user?.lastName}}</div>
 <br>
 <div class="ui grid container cards">
+<!--  Liste von Entries wird ausgegeben -->
 <div *ngFor="let entrie of padlet?.entries" >
+  <!-- bs-entrie-item -> entrie-item.component.ts , mit jeweiligen Entries -->
   <bs-entrie-item [entrie]=entrie [userrights]=userrights></bs-entrie-item><br>
 </div>
 </div>
-
-
-<!--<button [routerLink]="'/padlets'" class="ui blue button">Zurück zur Padletliste</button>-->

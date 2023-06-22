@@ -6,6 +6,7 @@ export class ErrorMessage {
   ) {}
 }
 
+//Entrie Formular Fehlermeldungen
 export const EntrieFormErrorMessages = [
   new ErrorMessage('title', 'required', 'Ein Eintrag Titel muss angegeben werden'),
   new ErrorMessage('text', 'required', 'Ein Text muss angegeben werden')

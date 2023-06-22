@@ -1,4 +1,7 @@
+<!-- Ausgabe der List von Padlets -->
 <div class="ui horizontal aligned selection list">
+  <!-- bs-padlet-list-item -> 'a.bs-padlet-list-item' von padlet-list-item.component.ts-->
   <a *ngFor="let padlet of padlets" class="item bs-padlet-list-item"
      [padlet]="padlet" [routerLink]="'/padlets/'+padlet.id.toString()"></a>
+      <!-- für jedes Padlet wird ein <a></a> erstellt + der Routerlink mit der jeweiligen padlet_id -->
 </div>

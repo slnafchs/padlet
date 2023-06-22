@@ -1,70 +1,83 @@
+<!--Ansicht der Entries-->
 <div class="item ui card">
   <div class="content">
+<!--Ausgabe Titel-->
     <div class="header"><b>{{entrie?.title }}</b></div>
-    <!-- Vor- und Nachname + Erstelldatum-->
+    <!-- Ausgabe Vor- und Nachname + Erstelldatum-->
     <div class="extra">{{entrie?.user?.firstName}} {{entrie?.user?.lastName}} | {{dateString}}</div><br>
+    <!--Ausgabe Beschreibung-->
     <div class="description">{{entrie?.content }}</div><br>
     <div class="ui small basic icon buttons">
+      <!--Buttons - kann man je nach Userrecht und ob man eingeloggt ist sehen-->
       <button *ngIf="userrights.edit" class="ui button" [routerLink]="['/addEntrie', entrie.padlet_id, entrie.id]"><i class="edit icon"></i></button>
       <button *ngIf="userrights.Delete" class="ui button" (click)="delete()"><i class="delete icon"></i></button>
       <button *ngIf="isLoggedIn()" class="ui button" (click)="addComment()"><i class="comment icon"></i></button>
       <button *ngIf="isLoggedIn()" class="ui button" (click)="addRating()"><i class="star icon"></i></button>
     </div>
   </div>
-  <!-- Kommentare und Ratings ausgeben-->
-
+  <!-- Ansicht der Kommentare und Ratings, Kommentare sieht man-->
   <div class="ui two item menu">
     <a class="item active" (click)="toggleComments()">Kommentare</a>
     <a class="item" (click)="toggleRatings()">Bewertungen</a>
   </div>
 
+  <!-- Ausgabe der Ratings -->
   <div *ngIf="showRatings" class="content">
     <div *ngFor="let rating of entrie.ratings" class="extra content">
+      <!--Ausgabe Vor- und Nachname-->
       <div class="extra">{{rating.user.firstName}} {{rating.user.lastName}}:</div>
+      <!--mit dem jeweiligen Rating-->
       <div class="ui star rating" *ngIf="rating.rating">
         <i *ngFor="let r of getRating(rating.rating)" class="yellow star icon"></i>
       </div><br>
     </div>
   </div>
 
+  <!-- Ausgabe der Kommentare -->
   <div *ngIf="showComments" class="content">
     <div *ngFor="let c of entrie.comments">
+      <!--Ausgabe Vor- und Nachname-->
       <div class="extra"><b>{{c.user.firstName}} {{c.user.lastName}}</b></div>
+      <!--Ausgabe Kommentar-->
       <div class="description">{{c.comment}}</div><br>
     </div>
   </div>
 
+  <!--Modal vom Kommentar hinzufügen-->
   <div id="comment-modal-{{entrie_id}}" class="ui small modal" [ngStyle]="{'padding':'20px'}">
     <h3>
       Kommentar hinzufügen
     </h3>
-
     <form class="ui small form" [formGroup]="commentForm" (ngSubmit)="submitCommentForm()">
       <input type="hidden" formControlName="id">
       <div class="field">
         <input formControlName="comment">
       </div>
       <div class="actions">
+          <!-- Modal schließt sich -->
           <button class="ui negative button" (click)="modalClose()">Cancel</button>
+          <!-- Kommentar speicher, geht nur wenn Form valid ist -->
           <button class="ui positive button" type="submit" class="ui button blue" [disabled]="commentForm.invalid">Speichern</button>
       </div>
     </form>
   </div>
 
+  <!--Modal vom Rating hinzufügen-->
   <div id="rating-modal-{{entrie_id}}" class="ui small modal" [ngStyle]="{'padding':'20px'}">
     <h3>
       Bewertung hinzufügen
     </h3>
-
     <form class="ui small form" [formGroup]="ratingForm" (ngSubmit)="submitRatingForm()">
       <input type="hidden" formControlName="id">
       <div class="field">
         <input type="number" formControlName="rating">
+        <!-- Wenn Eingabe keine Zahl ist -->
         <div *ngIf="ratingForm.get('rating')?.invalid &&
           (ratingForm.get('rating')?.dirty || ratingForm.get('rating')?.touched) &&
           ratingForm.get('rating')?.hasError('required')" class="ui negative message">
           Bewertung muss aus einer Zahl bestehen!
         </div>
+        <!-- Wenn Eingabe nicht zwischen 1 und 5 liegt -->
         <div *ngIf="ratingForm.get('rating')?.invalid &&
           (ratingForm.get('rating')?.dirty || ratingForm.get('rating')?.touched) &&
           ratingForm.get('rating')?.hasError('ratingRange')" class="ui negative message">
@@ -72,10 +85,11 @@
         </div>
       </div>
       <div class="actions">
+        <!-- Modul schließt -->
         <button class="ui negative button" (click)="modalClose()">Cancel</button>
+        <!-- Speichert Bewertung, nur wenn Form valid ist -->
         <button class="ui positive button" type="submit" class="ui button" [disabled]="ratingForm.invalid">Speichern</button>
       </div>
     </form>
   </div>
-
 </div>

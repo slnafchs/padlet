@@ -1,6 +1,9 @@
+<!--Ansicht der Userrights Liste-->
 <div class="ui relaxed divided list">
+  <!--Userrights werden ausgegeben-->
   <div class="item" *ngFor="let userright of userrights">
     <div class="content">
+    <!--userright-item.component-->
       <bs-userright-item [userright]=userright></bs-userright-item>
     </div>
   </div>

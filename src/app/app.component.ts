@@ -1,3 +1,5 @@
+
+
 import {Component, OnInit} from '@angular/core';
 import {Padlet, User} from "./shared/padlet";
 import {HttpClient} from "@angular/common/http";
@@ -7,42 +9,43 @@ import {PadletService} from "./shared/padlet.service";
 import { Invite } from './shared/invite';
 
 @Component({
-  selector: 'bs-root',
+  selector: 'bs-root', //index.html
   templateUrl: './app.component.html'
 })
 
 export class AppComponent implements OnInit{
-  //title = 'padletAngularApp';
-  //listOn = true;
-  //detailsOn = false;
   padlet: Padlet | undefined;
   userName : string = "";
-  pendingInvites : Invite[] = [];
+  pendingInvites : Invite[] = []; //leere Array
 
   constructor(private http: HttpClient,
               private bs : PadletService,
               private authService: AuthenticationService){
-    //http.get<Padlet>('https://padlet.s2010456006.student.kwmhgb.at/public').subscribe(val => this.padlet = val);
   }
 
+  //initialisieren
   ngOnInit(): void {
+    //wenn eingeloggt ist
     if(this.isLoggedIn()) {
+      //die user_id wird im Session Storage gesucht
       let user_id = +<string>sessionStorage.getItem('userId');
+      //getInvitesByUserID von padlet service liefert Ergebnis (Einladungen)
       this.bs.getInvitesByUserId(user_id).subscribe((res: Invite[]) =>{
-        this.pendingInvites = res;
+        this.pendingInvites = res; //Ergebnis wird in Array gespeichert
       })
     }
   }
 
-
+  //wenn eingeloggt, schaut ob token noch gültig ist
+  //authentication service
   isLoggedIn() {
     return this.authService.isLoggedIn();
   }
 
+  //wenn ausgeloggt, token wird entfernt
+  //authentication service
   logout() {
     this.authService.logout();
   }
-
-
 
 }

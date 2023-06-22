@@ -1,14 +1,20 @@
+<!--Ansicht einer Einleidung-->
+
 <div [ngStyle]="{'padding': '20px 0'}">
   <h3>Einladung von {{padlet.user.firstName}} {{padlet.user.lastName}} für "{{padlet.name}}"</h3>
   <div>
     <h5 [ngStyle]="{'display': 'inline-block'}">Berechtigungen: </h5>
+    <!--invite aus component.ts-->
+    <!--*ngIf="invite.read" -> wenn read auf true gesetzt ist-->
     <div *ngIf="invite.read" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Lesen</label></div>
     <div *ngIf="invite.edit" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Bearbeiten</label></div>
     <div *ngIf="invite.Delete" [ngStyle]="{'display': 'inline-block', 'padding': '0 10px'}"><label >Löschen</label></div>
   </div>
+  <!--wenn auf Button klickt, wird Einladung abgelehnt-->
   <button class="ui button" (click)="decline()">
     Ablehnen
   </button>
+  <!--wenn auf Button klickt, wird Einladung akzeptiert-->
   <button class="ui primary button" (click)="accept()">
     Akzeptieren
   </button>

@@ -1,7 +1,12 @@
+<!--Ansicht der User Einladungen-->
+
+<!--Schauen, ob Array der Einladungen leer ist (Länge = 0)-->
 <h2 *ngIf="pendingInvites.length == 0">Derzeit warten keine Einladungen.</h2>
 <div class="ui relaxed divided list">
+<!--Für jeden invite in der Liste wird ein invite-item erzeugt-->
   <div class="item" *ngFor="let invite of pendingInvites">
     <div class="content">
+      <!-- <bs-invite-item -> invite-item.component.ts -->
       <bs-invite-item [invite]="invite"></bs-invite-item>
     </div>
   </div>
